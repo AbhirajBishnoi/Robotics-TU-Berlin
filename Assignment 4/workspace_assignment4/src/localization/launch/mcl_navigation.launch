@@ -1,0 +1,8 @@
+<launch>
+  <param name="use_sim_time" type="bool" value="false"/>
+	<include file="$(find localization)/launch/mcl.launch" />
+  	<include file="$(find irobotexample)/launch/irobot_2_0.launch" /> 
+	<include file="$(find irobotexample)/launch/navigation.launch" /> 
+
+</launch>
+

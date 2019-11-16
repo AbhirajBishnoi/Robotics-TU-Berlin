@@ -1,0 +1,7 @@
+<launch>
+  <node name="map_view" pkg="create_gui" type="map_view" output="log"/>
+  <node name="mapper" pkg="mapping" type="mapper" output="log"/>
+
+  <node name="rosbag" pkg="rosbag" type="play" args="$(find mapping)/maze_corridor.bag" output="screen"/>
+</launch>
+

@@ -1,0 +1,35 @@
+<launch>
+<!--
+  <param name="use_sim_time" type="bool" value="false"/>
+-->
+  <param name="use_sim_time" type="bool" value="true"/>
+
+  <node name="rosbag" pkg="rosbag" type="play" args="$(find localization)/maze_localize.bag --clock" output="screen"/>
+  
+  <node name="map_server" pkg="map_server" type="map_server" args="$(find localization)/maze.yaml" output="screen"/>
+
+  <group ns="particle_filter">
+    <param name="number_of_particles" type="int" value="1000"/>
+
+    <param name="init_particles_uniform" type="bool" value="true"/>
+    <param name="initial_pose_x" type="double" value="4.1"/>
+    <param name="initial_pose_y" type="double" value="6.5"/>
+    <param name="initial_pose_theta" type="double" value="4.5"/>
+    <param name="initial_cov_xx" type="double" value="0.2"/>
+    <param name="initial_cov_yy" type="double" value="0.2"/>
+    <param name="initial_cov_thetatheta" type="double" value="0.5"/>
+
+    <param name="motionModel_alpha1" type="double" value="0.2"/>
+    <param name="motionModel_alpha2" type="double" value="0.2"/>
+    <param name="motionModel_alpha3" type="double" value="0.2"/>
+    <param name="motionModel_alpha4" type="double" value="0.2"/>
+
+    <param name="sensorModel_minLikelihood" type="double" value="0.80"/>
+    <param name="sensorModel_std" type="double" value="0.3"/>
+  </group>  
+  <node name="particle_filter" pkg="localization" type="particlefilter" respawn="false" output="screen"/>
+  
+  <node name="map_view" pkg="create_gui" type="map_view" output="log"/>
+
+</launch>
+
